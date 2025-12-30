@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDev Bloom | 12 Sweet Steps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #fff5fb;
+            --pink-soft: #fce4ec;
+            --pink-deep: #ff8fab;
+            --text-color: #5d4037;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            background-attachment: fixed;
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Aesthetic */
+        aside {
+            width: 340px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border-right: 2px solid var(--white);
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 20px;
+            z-index: 10;
+        }
+
+        .brand-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--pink-deep);
+            text-align: center;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .nav-container {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .nav-container::-webkit-scrollbar { width: 4px; }
+        .nav-container::-webkit-scrollbar-thumb { background: var(--pink-soft); border-radius: 10px; }
+
+        .nav-card {
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--pink-soft);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .nav-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(255, 143, 171, 0.2);
+        }
+
+        .nav-card.active {
+            background: var(--pink-deep);
+            color: white;
+            border-color: var(--pink-deep);
+        }
+
+        .step-num {
+            font-size: 0.8rem;
+            font-weight: 800;
+            background: var(--pink-soft);
+            color: var(--pink-deep);
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
+
+        .nav-card.active .step-num { background: white; }
+
+        /* Content Area */
+        main {
+            margin-left: 340px;
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            max-width: 850px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 50px;
+            border: 1px solid var(--white);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            animation: fadeIn 0.8s ease;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .meeting-tag {
+            background: var(--pink-soft);
+            color: #f8539a;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin: 20px 0;
+            color: var(--text-color);
+        }
+
+        .lesson-desc {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5d4037;
+            margin-bottom: 30px;
+        }
+
+        .code-box {
+            background: #2d3436;
+            border-radius: 25px;
+            padding: 30px;
+            padding-bottom: 60px;
+            color: #fab1a0;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 30px 0;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .code-box pre {
+            white-space: pre-wrap; 
+            word-wrap: break-word;
+        }
+
+        .code-box::after {
+            content: '✨ code magic';
+            position: absolute;
+            top: -10px; right: 30px;
+            background: var(--pink-deep);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+
+        .copy-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 15px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: var(--pink-deep);
+            border-color: var(--pink-deep);
+        }
+
+        .copy-btn:active { transform: scale(0.95); }
+
+        .goal-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .goal-card {
+            background: var(--pink-light);
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 5px solid var(--pink-deep);
+        }
+
+        .btn-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-back {
+            background: white;
+            color: var(--pink-deep);
+            border: 2px solid var(--pink-soft);
+        }
+
+        .btn-next {
+            background: linear-gradient(to right, var(--pink-deep), #ff8fab);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 220, 143, 0.3);
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 1000px) {
+            aside { display: none; }
+            main { margin-left: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="brand-logo">PEMROGRAMAN WEB 1</div>
+        <div class="nav-container" id="menu-list"></div>
+    </aside>
+
+    <main>
+        <div class="content-glass" id="content-view">
+            <div style="text-align: center; padding: 100px 0;">
+                <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem;">Ready to Sparkle?</h2>
+                <p>Pilih pertemuan untuk memulai Belajar!</p>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2025 - Pemrograman Web 1 | Marissa Firdha - 231011403524 </p>
+        </footer>
+    </main>
+
+    <script>
+        const courses = [
+            { 
+                t: "PENGENALAN WEB", 
+                d: "Materi ini menjelaskan dasar-dasar web, mulai dari pengertian World Wide Web, cara kerja web dengan model client–server menggunakan protokol HTTP, hingga peran browser dan server web. Selain itu, dibahas HTML sebagai bahasa dasar untuk menyusun struktur dan menampilkan konten halaman web.", 
+                c: "console.log('Hello Pretty World!');", 
+                g: [
+                    { nama: "World Wide Web", info: "Menjelajahi sejarah internet dunia." },
+                    { nama: "Cara Kerja Web", info: "Memahami request browser ke server." },
+                    { nama: "Pengantar HTML", info: "Mengenal bahasa markup dasar." },
+                    { nama: "Penulisan Struktur HTML", info: "Membuat kerangka dasar halaman web." }
+                ] 
+            },
+            { 
+                t: "BASIC TAG HTML", 
+                d: "Materi ini membahas struktur dasar HTML dan tag format dokumen (heading, paragraf, list) untuk membangun halaman web.", 
+                c: `<!DOCTYPE html>\n<html>\n<head>\n    <title>Belajar HTML</title>\n</head>\n<body>\n    <h1>Selamat Datang</h1>\n    <p>Ini adalah tag dasar HTML.</p>\n</body>\n</html>`,
+                g: [
+                    { nama: "Tag Dasar Struktur HTML", info: "Menyusun elemen utama halaman web." },
+                    { nama: "Format Dokumen HTML", info: "Mengatur tata letak teks dan media." }
+                ] 
+            },
+            { 
+                t: "FORMAT TEKS DAN KARAKTER KHUSUS", 
+                d: "Materi ini mempelajari cara mengatur tampilan tulisan di halaman web menggunakan tag HTML, mulai dari mengubah jenis, ukuran, dan warna huruf (Tag Font), hingga memberikan penekanan seperti cetak tebal, miring, atau garis bawah. Anda juga diajarkan cara menyisipkan karakter khusus (seperti simbol © atau ®) yang tidak ada di keyboard serta membuat teks bergerak interaktif dengan fitur marquee. Intinya, materi ini adalah panduan dasar untuk mempercantik teks dan elemen visual agar dokumen web lebih informatif dan menarik.", 
+                c: `<!DOCTYPE html>
+<html>
+<head>
+    <title>Demo Format Teks & Karakter Khusus</title>
+</head>
+<body>
+    <font face="Arial" color="purple" size="4">
+        Membangun website memerlukan HTML, CSS, dan JavaScript[cite: 30].
+    </font>
+
+    <br><br>
+
+    <b><i><u>Maju terus pantang mundur</u></i></b> [cite: 45]
+
+    <br><br>
+
+    Indonesia negara <big>kepulauan</big> dengan banyak <small>suku bangsa</small> dan <s>adat istiadat</s>[cite: 62].
+
+    <br><br>
+
+    Rumus Kimia Gula: C<sub>12</sub>H<sub>22</sub>O<sub>11</sub> [cite: 73]<br>
+    Persamaan Matematika: X<sub>1</sub><sup>2</sup> + Y<sub>1</sub><sup>3</sup> [cite: 74]
+
+    <br><br>
+
+    <p>
+        Hak Cipta: &copy; 2025 [cite: 126, 147]<br>
+        Merek Terdaftar: &reg; [cite: 127]<br>
+        Trade Mark: &trade; [cite: 130]
+    </p>
+
+    <marquee color="blue">Selamat datang di Pembelajaran Web 1!</marquee> [cite: 94]
+</body>
+</html>`, 
+                g: [
+                    { nama: "Format Teks", info: "Mengatur tampilan atau gaya visual tulisan (seperti warna, tebal, dan miring)." },
+                    { nama: "Karakter Khusus", info: "Digunakan untuk menampilkan simbol unik (seperti ©, ®, atau spasi) melalui kode HTML." }
+                ] 
+            },
+            { 
+                t: "MENAMPILKAN GAMBAR, SUARA DAN VIDEO", 
+                d: "Belajar mengatur jarak, margin, dan padding agar layout terlihat simetris dan elegan.", 
+                c: ".box { padding: 20px; }", 
+                g: [
+                    { nama: "Padding", info: "Jarak di dalam elemen." },
+                    { nama: "Margin", info: "Jarak di luar elemen." }
+                ] 
+            },
+            { 
+                t: "HYPERLINK", 
+                d: "Cara mudah mengatur elemen sejajar atau bertumpuk dengan sangat fleksibel.", 
+                c: ".flex { display: flex; }", 
+                g: [
+                    { nama: "Flex Direction", info: "Arah baris atau kolom." },
+                    { nama: "Justify Content", info: "Perataan secara horizontal." }
+                ] 
+            },
+            { 
+                t: "BULLET NUMBERING DAN LIST", 
+                d: "Membangun galeri foto atau layout majalah digital yang kompleks dengan mudah.", 
+                c: ".grid { display: grid; }", 
+                g: [
+                    { nama: "Grid Template", info: "Membuat kolom dan baris." },
+                    { nama: "Grid Area", info: "Penamaan area tata letak." }
+                ] 
+            },
+            { 
+                t: "TABEL", 
+                d: "Membuat gerakan lembut pada tombol dan gambar agar websitemu terasa lebih hidup.", 
+                c: "@keyframes bloom { ... }", 
+                g: [
+                    { nama: "Transitions", info: "Perubahan status yang halus." },
+                    { nama: "Keyframes", info: "Tahapan animasi kustom." }
+                ] 
+            },
+            { 
+                t: "FORM", 
+                d: "Memastikan websitemu tetap cantik saat dibuka di HP, tablet, maupun laptop.", 
+                c: "@media (max-width: 600px) {}", 
+                g: [
+                    { nama: "Breakpoints", info: "Titik henti ukuran layar." },
+                    { nama: "Mobile First", info: "Prioritas desain untuk HP." }
+                ] 
+            },
+            { 
+                t: "FRAME", 
+                d: "Memberi perintah logika pada website agar bisa berinteraksi dengan pengunjung.", 
+                c: "let mood = 'Happy';", 
+                g: [
+                    { nama: "Variables", info: "Menyimpan data informasi." },
+                    { nama: "Data Types", info: "Mengenal teks dan angka." }
+                ] 
+            },
+            { 
+                t: "IFRAME", 
+                d: "Waktunya menunjukkan karyamu ke seluruh dunia melalui hosting gratis yang mudah.", 
+                c: "git push origin main", 
+                g: [
+                    { nama: "Hosting", info: "Menaruh file di server online." },
+                    { nama: "SEO Basics", info: "Agar web mudah dicari Google." }
+                ] 
+            }
+        ];
+
+        const menuList = document.getElementById('menu-list');
+        const view = document.getElementById('content-view');
+
+        function init() {
+            courses.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'nav-card';
+                card.id = `nav-${i}`;
+                card.innerHTML = `<div class="step-num">${i+1}</div> <div><strong>${item.t}</strong></div>`;
+                card.onclick = () => render(i);
+                menuList.appendChild(card);
+            });
+        }
+
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = "Copied! ✓";
+                btn.style.background = "#4CAF50";
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = "rgba(255, 255, 255, 0.1)";
+                }, 2000);
+            });
+        }
+
+        function render(i) {
+            document.querySelectorAll('.nav-card').forEach(c => c.classList.remove('active'));
+            const activeCard = document.getElementById(`nav-${i}`);
+            if (activeCard) activeCard.classList.add('active');
+
+            const data = courses[i];
+            const isFirst = i === 0;
+            const isLast = i === courses.length - 1;
+
+            view.style.opacity = '0';
+            setTimeout(() => {
+                view.innerHTML = `
+                    <span class="meeting-tag">MEETING ${i+1}</span>
+                    <h1>${data.t}</h1>
+                    <p class="lesson-desc">${data.d}</p>
+                    <div class="code-box">
+                        <pre id="code-content"></pre>
+                        <button class="copy-btn" id="btn-copy">Copy Code</button>
+                    </div>
+                    <div class="goal-container">
+                        ${data.g.map(item => `
+                            <div class="goal-card">
+                                <strong>🌸 ${item.nama}</strong>
+                                <p style="font-size:0.8rem">${item.info}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="btn-nav-container">
+                        <div>
+                            ${!isFirst ? `<button class="btn-nav btn-back" onclick="render(${i - 1})">⇠ ${courses[i-1].t}</button>` : ''}
+                        </div>
+                        <div>
+                            ${!isLast ? `<button class="btn-nav btn-next" onclick="render(${i + 1})">${courses[i+1].t} ➔</button>` : `<button class="btn-nav btn-next" onclick="render(0)" style="background: #f8539a">Restart Journey ↺</button>`}
+                        </div>
+                    </div>
+                `;
+
+                const codeElement = document.getElementById('code-content');
+                codeElement.textContent = data.c;
+
+                document.getElementById('btn-copy').onclick = function() {
+                    copyToClipboard(data.c, this);
+                };
+
+                view.style.opacity = '1';
+                view.style.transition = '0.5s';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 200);
+        }
+
+        init();
+    </script>
+</body>
+</html>
